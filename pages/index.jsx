@@ -4,6 +4,7 @@ import Navbar from '../components/global/Navbar';
 import Footer from '../components/global/Footer';
 import Jumbotron from '../components/home/Jumbotron';
 import CategoryContainer from '../components/home/category/CategoryContainer';
+import JobContainer from './../components/home/job/JobContainer';
 
 const Home = ({ latestJobs, categories }) => {
   return (
@@ -15,6 +16,7 @@ const Home = ({ latestJobs, categories }) => {
       <div>
         <Jumbotron />
         <CategoryContainer categories={categories} />
+        <JobContainer jobs={latestJobs} />
       </div>
       <Footer />
     </>

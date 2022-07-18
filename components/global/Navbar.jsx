@@ -47,14 +47,18 @@ const Navbar = () => {
     dispatch(logout());
   };
 
+  /* flex-1:  means the following 1 1 0%: 
+  flex-grow : 1; ➜ The div will grow in same proportion as the window-size 
+  flex-shrink : 1; ➜ The div will shrink in same proportion as the window-size
+  flex-basis : 0; - if 3 divs are in the wrapper then each div will take 33%. */
   return (
-    <div className="flex items-center justify-between gap-10 lg:px-16 pl-4 pr-7 z-[999] py-3 bg-slate-50 sticky top-0 shadow-sm">
+    <div className="flex items-center justify-between gap-10 lg:px-16 pl-4 pr-7 z-[999] py-3 bg-white sticky top-0 shadow-sm">
       <div
         onClick={() => router.push('/')}
         className="flex items-center cursor-pointer"
       >
-        <Image src={Logo} width={60} height={60} alt="Job Seek" />
-        <h1 className="text-xl">Let&apos;s work </h1>
+        <Image src={Logo} width={60} height={60} alt="Let's work" />
+        <h1 className="text-xl">Let&apos;s work |</h1>
       </div>
       <div onClick={() => setOpenSidebar(true)} className="lg:hidden block">
         <GiHamburgerMenu className="text-xl cursor-pointer" />
@@ -63,18 +67,14 @@ const Navbar = () => {
         ref={sidebarRef}
         className={`lg:static fixed top-0 ${
           openSidebar ? 'right-0' : '-right-[3000px]'
-        } transition-all bottom-0 lg:shadow-none shadow-xl lg:w-auto w-[200px] lg:p-0 p-7 bg-slate-100 lg:flex lg:flex-1`}
+        } transition-all bottom-0 lg:shadow-none shadow-xl lg:w-auto w-[200px] lg:p-0 p-7 bg-white lg:flex lg:flex-1`}
       >
         <AiOutlineClose
           onClick={() => setOpenSidebar(false)}
           className="float-right text-xl mb-5 lg:hidden cursor-pointer"
         />
         <div className="clear-both" />
-        {/* flex-1:  means the following 1 1 0%: 
-        flex-grow : 1; ➜ The div will grow in same proportion as the window-size 
-        flex-shrink : 1; ➜ The div will shrink in same proportion as the window-size
-        flex-basis : 0; - if 3 divs are in the wrapper then each div will take 33%. */}
-        <div className="flex-1 flex lg:flex-row lg:items-center lg:gap-7 flex-col items-start gap-4 text-sm">
+        <div className="flex-1 lg:flex-row flex-col flex lg:items-center items-start text-sm lg:gap-7 gap-4">
           <Link href="/">
             <a
               className={`navbar-link ${
@@ -93,6 +93,18 @@ const Navbar = () => {
               Find Jobs
             </a>
           </Link>
+          {(auth.user?.role === 'organization' ||
+            auth.user?.role === 'admin') && (
+            <Link href="/find_candidate">
+              <a
+                className={`navbar-link ${
+                  pathname === '/find_candidate' ? 'active' : undefined
+                }`}
+              >
+                Find Candidates
+              </a>
+            </Link>
+          )}
         </div>
         <div className="text-sm flex lg:flex-row flex-col lg:items-center items-start lg:gap-8 gap-4 mt-10 lg:mt-0">
           {!auth.accessToken ? (
@@ -108,11 +120,11 @@ const Navbar = () => {
               </Link>
               <Link href="/register">
                 <a
-                  className={`px-6 py-2 border-2 rounded-full border-blue-600 ${
+                  className={`px-6 py-2 border-2 rounded-full border-blue-600  ${
                     pathname === '/register' ||
                     pathname === '/register/jobseeker' ||
                     pathname === '/register/organization'
-                      ? 'bg-blue-600 text-white'
+                      ? 'bg-blue-500 text-white'
                       : 'text-blue-600'
                   }`}
                 >
@@ -180,14 +192,14 @@ const Navbar = () => {
                   <a className="navbar-link">Dashboard</a>
                 </Link>
               )}
-              <div onClick={handleLogout}>
-                <p className="navbar-link cursor-pointer">Logout</p>
-              </div>
-              <div>
-                <p>Hi, {auth.user?.name}</p>
-              </div>
             </>
           )}
+          <div onClick={handleLogout}>
+            <p className="navbar-link cursor-pointer">Logout</p>
+          </div>
+          <div>
+            <p>Hi, {auth.user?.name}</p>
+          </div>
         </div>
       </div>
     </div>
