@@ -21,7 +21,7 @@ const handler = async (req, res) => {
     const { jobseek_rfToken: token } = req.cookies;
     if (!token) return res.status(401).json({ msg: 'Invalid authentication.' });
 
-    const decoded = jwt.verify(token, `${process.env.REFRESH_TOKEN_SECRET}`);
+    const decoded = jwt.verify(token, `${process.env.REFRESH_TOKEN}`);
     if (!decoded.id)
       return res.status(401).json({ msg: 'Invalid authentication.' });
 
