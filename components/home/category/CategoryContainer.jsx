@@ -13,7 +13,12 @@ const CategoryContainer = ({ categories }) => {
       </h1>
       <div>
         {categories.map((item) => (
-          <CategoryCard key={item._id} />
+          <CategoryCard
+            key={item._id}
+            title={item.name}
+            total={item.count}
+            image={item.image}
+          />
         ))}
       </div>
     </div>

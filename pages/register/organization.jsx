@@ -178,7 +178,7 @@ const Organization = () => {
     await axios
       .request(options)
       .then((response) => {
-        setProvinceData(response?.data.data);
+        setProvinceData(response?.data.fipsCode);
       })
       .catch((error) => {
         console.log(error);
@@ -204,8 +204,8 @@ const Organization = () => {
     await axios
       .request(optionsRegionCities)
       .then((response) => {
-        setCityData(response?.data.data);
-        setDistrictData(response?.data.data);
+        setCityData(response?.data.city);
+        setDistrictData(response?.data.wikiDataId);
       })
       .catch((error) => {
         console.log(error);
