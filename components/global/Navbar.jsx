@@ -52,7 +52,7 @@ const Navbar = () => {
   flex-shrink : 1; ➜ The div will shrink in same proportion as the window-size
   flex-basis : 0; - if 3 divs are in the wrapper then each div will take 33%. */
   return (
-    <div className="flex items-center justify-between gap-10 lg:px-16 pl-4 pr-7 z-[999] py-3 bg-white sticky top-0 shadow-sm">
+    <div className="flex items-center justify-between gap-10 lg:px-16 pl-4 pr-7 py-3 bg-white sticky top-0 z-[999] shadow-sm">
       <div
         onClick={() => router.push('/')}
         className="flex items-center cursor-pointer"

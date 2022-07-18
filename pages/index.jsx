@@ -15,6 +15,7 @@ const Home = ({ latestJobs, categories }) => {
       <Navbar />
       <div>
         <Jumbotron />
+        <h2>categories: {categories}</h2>
         <CategoryContainer categories={categories} />
         <JobContainer jobs={latestJobs} />
       </div>
