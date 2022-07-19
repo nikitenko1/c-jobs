@@ -134,7 +134,7 @@ const CreateCategoryModal = ({ openModal, setOpenModal, selectedItem }) => {
               <div className="flex gap-5 mt-3">
                 <div className="w-20 h-20 rounded-full border border-gray-300 shrink-0">
                   {image.length > 0 && (
-  <img
+                    <img
                       src={
                         image.length > 0
                           ? URL.createObjectURL(image[0])

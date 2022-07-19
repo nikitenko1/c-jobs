@@ -1,11 +1,10 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { register } from './../../utils/auth';
-import axios from 'axios';
 import Editor from './../../utils/Editor';
 import { validateEmail } from './../../utils/validator';
 import Footer from './../../components/global/Footer';
@@ -13,9 +12,6 @@ import Navbar from './../../components/global/Navbar';
 import Loader from './../../components/global/Loader';
 
 const Organization = () => {
-  const [provinceData, setProvinceData] = useState([]);
-  const [cityData, setCityData] = useState([]);
-  const [districtData, setDistrictData] = useState([]);
   const [description, setDescription] = useState('');
   const [organizationData, setOrganizationData] = useState({
     name: '',
@@ -165,57 +161,6 @@ const Organization = () => {
       router.push('/');
     }
   }, [router, auth]);
-
-  const fetchRegions = useCallback(async () => {
-    const options = {
-      method: 'GET',
-      url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/countries/UA/regions?offset=1',
-      headers: {
-        'X-RapidAPI-Key': `${process.env.NEXT_PUBLIC_X_RAPID_API_KEY}`,
-        'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
-      },
-    };
-    await axios
-      .request(options)
-      .then((response) => {
-        setProvinceData(response?.data.fipsCode);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  useEffect(() => {
-    console.log('fetchRegions');
-    // fetchRegions();
-  }, [fetchRegions]);
-
-  const getCities = useCallback(async () => {
-    const optionsRegionCities = {
-      method: 'GET',
-      url: `https://wft-geo-db.p.rapidapi.com/v1/geo/countries/UA/regions/${organizationData.province}/cities`,
-      params: { sort: '-population' },
-      headers: {
-        'X-RapidAPI-Key': `${process.env.NEXT_PUBLIC_X_RAPID_API_KEY}`,
-        'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
-      },
-    };
-
-    await axios
-      .request(optionsRegionCities)
-      .then((response) => {
-        setCityData(response?.data.city);
-        setDistrictData(response?.data.wikiDataId);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [organizationData.province]);
-
-  useEffect(() => {
-    // getCities();
-    console.log('getCities');
-  }, [getCities]);
 
   return (
     <>
@@ -374,38 +319,55 @@ const Organization = () => {
                 <label htmlFor="province" className="text-sm">
                   Province
                 </label>
+
                 <select
                   name="province"
+                  id="province"
                   value={organizationData.province}
                   onChange={handleChangeInput}
-                  id="province"
-                  className="outline-0 mt-3 w-full px-3 text-sm h-10 border border-gray-300 rounded-md bg-transparent"
+                  className="w-full outline-0 bg-transparent border border-gray-300 rounded-md h-10 px-2 mt-3 text-sm"
                 >
                   <option value="">- Select Province -</option>
-                  {provinceData.map((item) => (
-                    <option key={item.fipsCode} value={item.fipsCode}>
-                      {item.name}
-                    </option>
-                  ))}
+                  <option value="Cherkasy Oblast">Cherkasy Oblast</option>
+                  <option value="Chernihiv Oblast"> Chernihiv Oblast</option>
+                  <option value="Chernivtsi Oblast">Chernivtsi Oblast</option>
+                  <option value="Donetsk Oblast">Donetsk Oblast</option>
+                  <option value="Kharkiv Oblast">Kharkiv Oblast</option>
+                  <option value="Kherson Oblast">Kherson Oblast</option>
+                  <option value="Khmelnytskyi Oblast">
+                    Khmelnytskyi Oblast
+                  </option>
+                  <option value="Kyiv Oblast">Kyiv Oblast</option>
+                  <option value="Kirovohrad Oblast">Kirovohrad Oblast</option>
+                  <option value="Luhansk Oblast">Luhansk Oblast</option>
+                  <option value="Lviv Oblast">Lviv Oblast</option>
+                  <option value="Mykolaiv Oblast">Mykolaiv Oblast</option>
+                  <option value="Odessa Oblast">Odessa Oblast</option>
+                  <option value="Poltava Oblast">Poltava Oblast</option>
+                  <option value="Sumy Oblast">Sumy Oblast</option>
+                  <option value="Vinnytsia Oblast">Vinnytsia Oblast</option>
+                  <option value=" Volyn Oblast">Zakarpattia Oblast</option>
+                  <option value="Zaporizhzhia Oblast">
+                    Zaporizhzhia Oblast
+                  </option>
+                  <option value="Zhytomyr Oblast">Zhytomyr Oblast</option>
                 </select>
               </div>
               <div className="flex-1">
                 <label htmlFor="city" className="text-sm">
                   City
                 </label>
+
                 <select
                   name="city"
                   id="city"
                   value={organizationData.city}
                   onChange={handleChangeInput}
-                  className="outline-0 mt-3 w-full px-3 text-sm h-10 border border-gray-300 rounded-md bg-transparent"
+                  className="w-full outline-0 bg-transparent border border-gray-300 rounded-md h-10 px-2 mt-3 text-sm"
                 >
                   <option value="">- Select City -</option>
-                  {cityData.map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.name} - {item.population}
-                    </option>
-                  ))}
+                  <option value="Kyiv">Kyiv</option>
+                  <option value="New York">New York</option>
                 </select>
               </div>
             </div>
@@ -414,19 +376,60 @@ const Organization = () => {
                 <label htmlFor="district" className="text-sm">
                   District
                 </label>
+
                 <select
                   name="district"
                   id="district"
                   value={organizationData.district}
                   onChange={handleChangeInput}
-                  className="outline-0 mt-3 w-full px-3 text-sm h-10 border border-gray-300 rounded-md bg-transparent"
+                  className="w-full outline-0 bg-transparent border border-gray-300 rounded-md h-10 px-2 mt-3 text-sm"
                 >
                   <option value="">- Select District -</option>
-                  {districtData.map((item) => (
-                    <option key={item.wikiDataId} value={item.wikiDataId}>
-                      {item.wikiDataId} - {item.name}
-                    </option>
-                  ))}
+                  {organizationData.city === 'Kyiv' ? (
+                    <>
+                      <option value="Darnytskyi District">
+                        Darnytskyi District
+                      </option>
+                      <option value="Desnianskyi District">
+                        Desnianskyi District
+                      </option>
+                      <option value="Dniprovskyi District">
+                        Dniprovskyi District
+                      </option>
+                      <option value="Holosiivskyi District">
+                        Holosiivskyi District
+                      </option>
+                      <option value="Pecherskyi District">
+                        Obolonskyi District
+                      </option>
+                      <option value="Shevchenkivskyi District">
+                        Shevchenkivskyi District
+                      </option>
+                      <option value="Solomianskyi District">
+                        Solomianskyi District
+                      </option>
+                      <option value="Sviatoshynskyi District">
+                        Sviatoshynskyi District
+                      </option>
+                      <option value="Sviatoshynskyi District">
+                        Sviatoshynskyi District
+                      </option>
+                    </>
+                  ) : (
+                    <>
+                      <option value="Bronx District">Bronx District</option>
+                      <option value="Brooklyn District">
+                        Brooklyn District
+                      </option>
+                      <option value="Manhattan District">
+                        Manhattan District
+                      </option>
+                      <option value="Queens District">Queens District</option>
+                      <option value="Staten Island">
+                        Staten Island District
+                      </option>
+                    </>
+                  )}
                 </select>
               </div>
               <div className="flex-1">
