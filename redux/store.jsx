@@ -5,15 +5,10 @@ import alert from './slices/alertSlice';
 import job from './slices/jobSlice';
 import organization from './slices/organizationSlice';
 import category from './slices/categorySlice';
+import applicant from './slices/applicantSlice';
 
 const store = configureStore({
-  reducer: {
-    auth,
-    alert,
-    job,
-    organization,
-    category,
-  },
+  reducer: { applicant, auth, alert, category, job, organization },
 });
 
 const DataProvider = ({ children }) => {

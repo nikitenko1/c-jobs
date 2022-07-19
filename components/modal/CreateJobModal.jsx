@@ -20,7 +20,7 @@ const CreateJobModal = ({ openModal, setOpenModal, selectedItem }) => {
   const [categoryData, setCategoryData] = useState([]);
 
   const dispatch = useDispatch();
-  const { auth } = useSelector((state) => state);
+  const { auth, alert } = useSelector((state) => state);
 
   const modalRef = useRef();
   /**
@@ -78,10 +78,10 @@ const CreateJobModal = ({ openModal, setOpenModal, selectedItem }) => {
       });
     }
 
-    if (salary < 10000) {
+    if (salary < 1000) {
       return dispatch({
         type: 'alert/alert',
-        payload: { error: 'Salary should be at least IDR 10.000' },
+        payload: { error: 'Salary should be at least USD 1.000' },
       });
     }
 
@@ -153,12 +153,12 @@ const CreateJobModal = ({ openModal, setOpenModal, selectedItem }) => {
 
   useEffect(() => {
     const fetchCategory = async () => {
-      const res = await getDataAPI('category');
+      const res = await getDataAPI('category/organization', auth.accessToken);
       setCategoryData(res.data.categories);
     };
-
+    console.log('MY var', `${process.env.ACCESS_TOKEN}`);
     fetchCategory();
-  }, []);
+  }, [auth]);
 
   useEffect(() => {
     if (Object.keys(selectedItem).length > 0) {
@@ -237,7 +237,9 @@ const CreateJobModal = ({ openModal, setOpenModal, selectedItem }) => {
         } modal-box max-w-[609px] h-[600px] overflow-auto hide-scrollbar`}
       >
         <div className="modal-box-header">
-          <h1 className="font-medium text-lg">Create Job</h1>
+          <h1 className="font-medium text-lg">
+            {Object.keys(selectedItem).length > 0 ? 'Edit Job' : 'Create Job'}
+          </h1>
           <AiOutlineClose
             onClick={() => setOpenModal(false)}
             className="cursor-pointer"
@@ -396,21 +398,30 @@ const CreateJobModal = ({ openModal, setOpenModal, selectedItem }) => {
                 />
               </div>
             </div>
-            <button
-              className={`${
-                alert.loading
-                  ? 'bg-gray-200 hover:bg-gray-200 cursor-auto'
-                  : 'bg-blue-500 hover:bg-blue-700 cursor-pointer'
-              } transition-[background] text-sm w-full py-3 text-white rounded-md mt-7`}
-            >
-              {loading ? (
-                <Loader />
-              ) : Object.keys(selectedItem).length > 0 ? (
-                'Save Changes'
-              ) : (
-                'Post Job'
-              )}
-            </button>
+            <div className="flex items-center gap-5 justify-center text-sm">
+              <button
+                className={`${
+                  alert.loading
+                    ? 'bg-gray-200 hover:bg-gray-200 cursor-auto'
+                    : 'bg-blue-500 hover:bg-blue-700 cursor-pointer'
+                } transition-[background] text-sm w-full py-3 text-white rounded-md mt-7`}
+              >
+                {loading ? (
+                  <Loader />
+                ) : Object.keys(selectedItem).length > 0 ? (
+                  'Save Changes'
+                ) : (
+                  'Post Job'
+                )}
+              </button>
+              <button
+                type="button"
+                onClick={() => setOpenModal(false)}
+                className="bg-gray-200 hover:bg-gray-400 transition-[background] text-sm w-full py-3 text-blue-600 rounded-md mt-7"
+              >
+                Cancel
+              </button>
+            </div>
           </form>
         </div>
       </div>

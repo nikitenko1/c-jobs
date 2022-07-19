@@ -20,7 +20,6 @@ const Jobs = () => {
   const [selectedItem, setSelectedItem] = useState({});
   const [currPage, setCurrPage] = useState(1);
 
-  const router = useRouter();
   const dispatch = useDispatch();
   const { alert, auth, job } = useSelector((state) => state);
 
@@ -55,6 +54,8 @@ const Jobs = () => {
     );
     setOpenDeleteModal(false);
   };
+
+  const router = useRouter();
 
   useEffect(() => {
     if (!auth.accessToken) {
@@ -173,10 +174,11 @@ const Jobs = () => {
           openModal={openJobDetailModal}
           setOpenModal={setOpenJobDetailModal}
           jobDetail={selectedItem}
+          auth={auth}
         />
       )}
 
-      {/* <DeleteModal
+      <DeleteModal
         openModal={openDeleteModal}
         setOpenModal={setOpenDeleteModal}
         text="job"
@@ -187,7 +189,7 @@ const Jobs = () => {
         openModal={openApplicantModal}
         setOpenModal={setOpenApplicantModal}
         jobId={selectedItem._id}
-      /> */}
+      />
 
       <CreateJobModal
         openModal={openCreateJobModal}

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { patchDataAPI } from './../../utils/fetchData';
-import Head from 'next/head';s
+import Head from 'next/head';
 import Footer from './../../components/global/Footer';
 import Navbar from './../../components/global/Navbar';
 import Loader from './../../components/global/Loader';
