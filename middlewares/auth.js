@@ -8,6 +8,7 @@ export const isAuthenticated = async (req, res) => {
   if (!token) return res.status(401).json({ msg: 'Invalid authentication.' });
 
   const decoded = jwt.verify(token, `${process.env.ACCESS_TOKEN}`);
+  console.log('isAuthenticated var', `${process.env.ACCESS_TOKEN}`);
   if (!decoded.id)
     return res.status(401).json({ msg: 'Invalid authentication.' });
 
