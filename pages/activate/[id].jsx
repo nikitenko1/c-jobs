@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { GetServerSideProps } from 'next';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import axios from 'axios';
