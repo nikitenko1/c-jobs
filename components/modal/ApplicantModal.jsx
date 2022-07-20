@@ -14,19 +14,12 @@ const ApplicantModal = ({ openModal, setOpenModal, jobId }) => {
     }
   }, [jobId, auth, dispatch]);
 
-  /**
-   * Hook that alerts clicks outside of the passed ref
-   */
-  // Hook get from https://stackoverflow.com/a/42234988/8583669
   const modalRef = useRef();
 
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
         openModal &&
-        /**
-         * Alert if clicked on outside of element
-         */
         modalRef.current &&
         !modalRef.current.contains(e.target)
       ) {
@@ -39,6 +32,13 @@ const ApplicantModal = ({ openModal, setOpenModal, jobId }) => {
       // Unbind the event listener on clean up
       document.removeEventListener('mousedown', handleClickOutside);
   }, [openModal, setOpenModal]);
+
+  useEffect(() => {
+    if (jobId && auth.accessToken) {
+      dispatch(getApplicants({ jobId, token: auth.accessToken }));
+    }
+  }, [jobId, auth, dispatch]);
+
   return (
     <div
       className={`modal-background ${

@@ -138,11 +138,10 @@ export const updateJob = createAsyncThunk(
 );
 
 export const getJobPosition = createAsyncThunk(
-  'job/position',
+  'job/position', // redux action type constants
   async (token, thunkAPI) => {
     try {
       const res = await getDataAPI('job/position', token);
-      // API: return res.status(200).json({ position });
       return {
         data: res.data.position,
         page: 1,

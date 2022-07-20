@@ -1,5 +1,5 @@
-import Job from './../../../models/Job';
 import { authorizeRoles, isAuthenticated } from '../../../middlewares/auth';
+import Job from '../../../models/Job';
 import connectDB from './../../../libs/connectDB';
 
 connectDB();
@@ -19,26 +19,12 @@ const handler = async (req, res) => {
 
   const position = await Job.aggregate([
     { $match: { organization: isAuthorize._id } },
-    // const jobSchema = new mongoose.Schema(
-    //   {
-    //     organization: {
-    //       type: mongoose.Types.ObjectId,
-    //       ref: 'organization',
-    //       required: true,
-    //     },
     {
       $lookup: {
         from: 'organizations',
         let: { org_id: '$organization' },
         pipeline: [
           { $match: { $expr: { $eq: ['$_id', '$$org_id'] } } },
-          // const organizationSchema = new mongoose.Schema(
-          //   {
-          //     user: {
-          //       type: mongoose.Types.ObjectId,
-          //       ref: 'user',
-          //       required: true,
-          //     },
           {
             $lookup: {
               from: 'users',
