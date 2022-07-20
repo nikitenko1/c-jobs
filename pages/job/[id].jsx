@@ -96,7 +96,7 @@ const JobDetail = ({ job }) => {
                 {auth.user?.role === 'jobseeker' && (
                   <button
                     onClick={applyJob}
-                    className="bg-[#504ED7] hover:bg-[#2825C2] outline-0 transition-[background] text-white rounded-md text-sm px-4 py-2"
+                    className="bg-blue-400 hover:bg-blue-600 outline-0 transition-[background] text-white rounded-md text-sm px-4 py-2"
                   >
                     Apply
                   </button>
