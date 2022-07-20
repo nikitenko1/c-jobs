@@ -137,6 +137,27 @@ export const updateJob = createAsyncThunk(
   }
 );
 
+export const getJobPosition = createAsyncThunk(
+  'job/position',
+  async (token, thunkAPI) => {
+    try {
+      const res = await getDataAPI('job/position', token);
+      // API: return res.status(200).json({ position });
+      return {
+        data: res.data.position,
+        page: 1,
+      };
+    } catch (err) {
+      thunkAPI.dispatch({
+        type: 'alert/alert',
+        payload: {
+          error: err.response.data.msg,
+        },
+      });
+    }
+  }
+);
+
 const initialState = { data: [], totalPage: 0 };
 
 const jobSlice = createSlice({

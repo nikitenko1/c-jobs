@@ -87,7 +87,7 @@ const ForgetPassword = () => {
               className={`${
                 loading
                   ? 'bg-gray-200 hover:bg-gray-200 cursor-auto'
-                  : 'bg-blue-500 hover:bg-blue-700 cursor-pointer'
+                  : 'bg-blue-500 hover:bg-blue-600 cursor-pointer'
               } transition-[background] text-sm w-full py-3 text-white rounded-md mt-7`}
             >
               {loading ? <Loader /> : 'Submit Now'}
