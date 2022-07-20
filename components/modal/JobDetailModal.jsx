@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
-import { toCurrency } from './../../utils/numberFormatter';
+import { toCurrency } from './../../utils/toCurrency';
 
 const JobDetailModal = ({
   openModal,

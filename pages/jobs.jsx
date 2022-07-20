@@ -81,10 +81,11 @@ const Jobs = ({ data }) => {
       setMinSalary(parseInt(salary));
     }
   }, [router]);
+
   return (
     <>
       <Head>
-        <title>Let&apos;s work | Jobs</title>
+        <title> Let&apos;s work | Jobs</title>
       </Head>
       <Navbar />
       <div className="md:py-10 py-7 md:px-16 px-5">
@@ -102,10 +103,10 @@ const Jobs = ({ data }) => {
                 placeholder="Job title or keyword"
                 className="outline-0 h-full px-2 w-full text-sm"
               />
-              <button className="bg-blue-400 hover:bg-blue-500 transition-[background] text-white text-sm px-6 py-2 rounded-full outline-0">
-                Search
-              </button>
             </div>
+            <button className="bg-blue-400 hover:bg-blue-600 transition-[background] text-white text-sm px-6 py-2 rounded-full outline-0">
+              Search
+            </button>
           </form>
         </div>
       </div>
@@ -118,7 +119,6 @@ const Jobs = ({ data }) => {
         setMinSalary={setMinSalary}
         handleFilter={handleFilter}
       />
-
       <div className="bg-gray-100 pt-10 pb-7 md:px-16 px-5">
         {jobs.length === 0 ? (
           <div className="bg-red-500 text-center text-white rounded-md py-3">
@@ -164,6 +164,7 @@ export const getServerSideProps = async (context) => {
       url += `jobLevel=${jobLevel}&`;
     }
   }
+
   if (employmentType) {
     if (typeof employmentType !== 'string') {
       for (let i = 0; i < employmentType.length; i++) {
@@ -177,13 +178,13 @@ export const getServerSideProps = async (context) => {
       url += `employmentType=${employmentType}&`;
     }
   }
+
   if (salary) {
     url += `salary=${salary}&`;
   }
+
   const res = await axios.get(url);
 
-  //   API const jobs = await Job.aggregate(jobAggregate);
-  //   return res.status(200).json({ jobs });
   return {
     props: {
       data: res.data.jobs,

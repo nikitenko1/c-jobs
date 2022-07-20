@@ -15,10 +15,12 @@ const handler = async (req, res) => {
   const jobId = req.query.id;
   let user;
   let isAuthorize;
+
   switch (req.method) {
     case 'GET':
       const job = await Job.aggregate([
         { $match: { _id: new mongoose.Types.ObjectId(jobId) } },
+
         //   const jobSchema = new mongoose.Schema({
         //     organization: {
         //       type: mongoose.Types.ObjectId,
@@ -63,7 +65,9 @@ const handler = async (req, res) => {
             as: 'organization',
           },
         },
+        { $unwind: '$organization' },
       ]);
+
       if (job.length === 0)
         return res.status(404).json({ msg: `Job with ID ${jobId} not found.` });
       return res.status(200).json({ job });
