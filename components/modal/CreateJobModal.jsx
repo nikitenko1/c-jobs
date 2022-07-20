@@ -156,7 +156,7 @@ const CreateJobModal = ({ openModal, setOpenModal, selectedItem }) => {
       const res = await getDataAPI('category/organization', auth.accessToken);
       setCategoryData(res.data.categories);
     };
-    console.log('MY var', `${process.env.ACCESS_TOKEN}`);
+
     fetchCategory();
   }, [auth]);
 
