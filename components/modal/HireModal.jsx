@@ -8,10 +8,6 @@ const HireModal = ({ openModal, setOpenModal, userName, id, job }) => {
   const [position, setPosition] = useState('');
   const [loading, setLoading] = useState(false);
 
-  /**
-   * Hook that alerts clicks outside of the passed ref
-   */
-  // Hook get from https://stackoverflow.com/a/42234988/8583669
   const modalRef = useRef();
   useEffect(() => {
     const handleClickOutside = (e) => {
